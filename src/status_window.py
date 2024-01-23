@@ -48,6 +48,10 @@ class StatusWindow(threading.Thread):
         self.pencil_image = self.pencil_image.resize((32, 32), Image.ANTIALIAS)
         self.pencil_photo = ImageTk.PhotoImage(self.pencil_image)
 
+        self.copy_image = Image.open(os.path.join('assets', 'copy.png'))
+        self.copy_image = self.copy_image.resize((32, 32), Image.ANTIALIAS)
+        self.copy_photo = ImageTk.PhotoImage(self.copy_image)
+
         self.icon_label = tk.Label(self.window, image=self.microphone_photo, bg='#B0C4DE')
         self.icon_label.place(x=50, y=40, anchor='center')
 
@@ -71,6 +75,9 @@ class StatusWindow(threading.Thread):
                 self.label.config(text=text)
             elif status == 'transcribing' and hasattr(self, 'window'):
                 self.icon_label.config(image=self.pencil_photo)
+                self.label.config(text=text)
+            elif status == 'copied' and hasattr(self, 'window'):
+                self.icon_label.config(image=self.copy_photo)
                 self.label.config(text=text)
             self.window.after(100, self.process_queue)
         except queue.Empty:

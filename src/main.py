@@ -7,6 +7,7 @@ import keyboard
 from pynput.keyboard import Controller
 from transcription import create_local_model, record_and_transcribe
 from status_window import StatusWindow
+import pyperclip
 
 class ResultThread(threading.Thread):
     def __init__(self, *args, **kwargs):
@@ -39,7 +40,8 @@ def load_config_with_defaults():
             'condition_on_previous_text': True,
             'vad_filter': False,
         },
-        'activation_key': 'ctrl+shift+space',
+        'activation_key': 'ctrl + alt + space',
+        'copy_activation_key': 'ctrl + shift + space',
         'sound_device': None,
         'sample_rate': 16000,
         'silence_duration': 900,
@@ -67,7 +69,7 @@ def clear_status_queue():
         except queue.Empty:
             break
 
-def on_shortcut():
+def get_transcribed_text():
     global status_queue, local_model
     clear_status_queue()
 
@@ -86,8 +88,17 @@ def on_shortcut():
     if status_window.is_alive():
         status_queue.put(('cancel', ''))
 
-    transcribed_text = recording_thread.result
+    return recording_thread.result
 
+def on_copy_shortcut():
+    transcribed_text = get_transcribed_text()
+    if transcribed_text:
+        pyperclip.copy(transcribed_text)
+        print(f"Copied {transcribed_text} to clipboard.")
+        status_queue.put(('copied', transcribed_text))
+
+def on_shortcut():
+    transcribed_text = get_transcribed_text()
     if transcribed_text:
         typewrite(transcribed_text, interval=config['writing_key_press_delay'])
 
@@ -108,6 +119,7 @@ method = 'OpenAI\'s API' if config['use_api'] else 'a local model'
 status_queue = queue.Queue()
 
 keyboard.add_hotkey(config['activation_key'], on_shortcut)
+keyboard.add_hotkey(config['copy_activation_key'], on_copy_shortcut)
 pyinput_keyboard = Controller()
 
 print(f'Script activated. Whisper is set to run using {method}. To change this, modify the "use_api" value in the src\\config.json file.')
@@ -117,7 +129,9 @@ if not config['use_api']:
     local_model = create_local_model(config)
     print('Local model created.')
 
-print(f'Press {format_keystrokes(config["activation_key"])} to start recording and transcribing. Press Ctrl+C on the terminal window to quit.')
+print(f'Press {format_keystrokes(config["activation_key"])} to start recording and transcribing.')
+print(f'Press {format_keystrokes(config["copy_activation_key"])} to record and transcribe to the clipboard.')
+print(f'Press Ctrl+C on the terminal window to quit.')
 try:
     keyboard.wait()  # Keep the script running to listen for the shortcut
 except KeyboardInterrupt:

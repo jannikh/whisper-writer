@@ -16,13 +16,14 @@
         "condition_on_previous_text": true,
         "vad_filter": false
     },
-    "activation_key": "ctrl+shift+space",
+    "activation_key": "ctrl + alt + space",
+    "copy_activation_key": "ctrl + shift + space",
     "sound_device": null,
     "sample_rate": 16000,
-    "silence_duration": 900,
+    "silence_duration": 1500,
     "writing_key_press_delay": 0.005,
     "remove_trailing_period": false,
-    "add_trailing_space": true,
+    "add_trailing_space": false,
     "remove_capitalization": false,
     "print_to_terminal": true
 }
