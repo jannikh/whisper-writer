@@ -281,6 +281,19 @@ class KeyListener:
         self.backends = []
         self.active_backend = None
         self.key_chord = None
+        self.copy_key_chord = None
+        self.eval_key_chord = None
+        self.eval_advanced_key_chord = None
+        self.copy_eval_key_chord = None
+        self.copy_eval_advanced_key_chord = None
+        self.eval_clipboard_key_chord = None
+        self.eval_clipboard_advanced_key_chord = None
+        self.copy_eval_clipboard_key_chord = None
+        self.copy_eval_clipboard_advanced_key_chord = None
+        self.eval_current_text_key_chord = None
+        self.eval_current_text_advanced_key_chord = None
+        self.copy_eval_current_text_key_chord = None
+        self.copy_eval_current_text_advanced_key_chord = None
         self.callbacks = {
             "on_activate": [],
             "on_deactivate": []
@@ -354,8 +367,47 @@ class KeyListener:
     def load_activation_keys(self):
         """Load activation keys from configuration."""
         key_combination = ConfigManager.get_config_value('recording_options', 'activation_key')
+        copy_key_combination = ConfigManager.get_config_value('recording_options', 'copy_activation_key')
+        eval_key_combination = ConfigManager.get_config_value('recording_options', 'eval_activation_key')
+        eval_advanced_key_combination = ConfigManager.get_config_value('recording_options', 'eval_activation_key_advanced')
+        copy_eval_key_combination = ConfigManager.get_config_value('recording_options', 'copy_eval_activation_key')
+        copy_eval_advanced_key_combination = ConfigManager.get_config_value('recording_options', 'copy_eval_activation_key_advanced')
+        eval_clipboard_key_combination = ConfigManager.get_config_value('recording_options', 'eval_clipboard_activation_key')
+        eval_clipboard_advanced_key_combination = ConfigManager.get_config_value('recording_options', 'eval_clipboard_activation_key_advanced')
+        copy_eval_clipboard_key_combination = ConfigManager.get_config_value('recording_options', 'copy_eval_clipboard_activation_key')
+        copy_eval_clipboard_advanced_key_combination = ConfigManager.get_config_value('recording_options', 'copy_eval_clipboard_activation_key_advanced')
+        eval_current_text_key_combination = ConfigManager.get_config_value('recording_options', 'eval_current_text_activation_key')
+        eval_current_text_advanced_key_combination = ConfigManager.get_config_value('recording_options', 'eval_current_text_activation_key_advanced')
+        copy_eval_current_text_key_combination = ConfigManager.get_config_value('recording_options', 'copy_eval_current_text_activation_key')
+        copy_eval_current_text_advanced_key_combination = ConfigManager.get_config_value('recording_options', 'copy_eval_current_text_activation_key_advanced')
         keys = self.parse_key_combination(key_combination)
+        copy_keys = self.parse_key_combination(copy_key_combination)
+        eval_keys = self.parse_key_combination(eval_key_combination)
+        eval_advanced_keys = self.parse_key_combination(eval_advanced_key_combination)
+        copy_eval_keys = self.parse_key_combination(copy_eval_key_combination)
+        copy_eval_advanced_keys = self.parse_key_combination(copy_eval_advanced_key_combination)
+        eval_clipboard_keys = self.parse_key_combination(eval_clipboard_key_combination)
+        eval_clipboard_advanced_keys = self.parse_key_combination(eval_clipboard_advanced_key_combination)
+        copy_eval_clipboard_keys = self.parse_key_combination(copy_eval_clipboard_key_combination)
+        copy_eval_clipboard_advanced_keys = self.parse_key_combination(copy_eval_clipboard_advanced_key_combination)
+        eval_current_text_keys = self.parse_key_combination(eval_current_text_key_combination)
+        eval_current_text_advanced_keys = self.parse_key_combination(eval_current_text_advanced_key_combination)
+        copy_eval_current_text_keys = self.parse_key_combination(copy_eval_current_text_key_combination)
+        copy_eval_current_text_advanced_keys = self.parse_key_combination(copy_eval_current_text_advanced_key_combination)
         self.set_activation_keys(keys)
+        self.set_activation_copy_keys(copy_keys)
+        self.set_activation_eval_keys(eval_keys)
+        self.set_activation_eval_advanced_keys(eval_advanced_keys)
+        self.set_activation_copy_eval_keys(copy_eval_keys)
+        self.set_activation_copy_eval_advanced_keys(copy_eval_advanced_keys)
+        self.set_activation_eval_clipboard_keys(eval_clipboard_keys)
+        self.set_activation_eval_clipboard_advanced_keys(eval_clipboard_advanced_keys)
+        self.set_activation_copy_eval_clipboard_keys(copy_eval_clipboard_keys)
+        self.set_activation_copy_eval_clipboard_advanced_keys(copy_eval_clipboard_advanced_keys)
+        self.set_activation_eval_current_text_keys(eval_current_text_keys)
+        self.set_activation_eval_current_text_advanced_keys(eval_current_text_advanced_keys)
+        self.set_activation_copy_eval_current_text_keys(copy_eval_current_text_keys)
+        self.set_activation_copy_eval_current_text_advanced_keys(copy_eval_current_text_advanced_keys)
 
     def parse_key_combination(self, combination_string: str) -> Set[KeyCode | frozenset[KeyCode]]:
         """Parse a string representation of key combination into a set of KeyCodes."""
@@ -383,30 +435,174 @@ class KeyListener:
         """Set the activation keys for the KeyChord."""
         self.key_chord = KeyChord(keys)
 
+    def set_activation_copy_keys(self, keys: Set[KeyCode]):
+        """Set the activation copy keys for the KeyChord."""
+        self.copy_key_chord = KeyChord(keys)
+
+    def set_activation_eval_keys(self, keys: Set[KeyCode]):
+        """Set the activation eval keys for the KeyChord."""
+        self.eval_key_chord = KeyChord(keys)
+
+    def set_activation_eval_advanced_keys(self, keys: Set[KeyCode]):
+        """Set the activation eval advanced keys for the KeyChord."""
+        self.eval_advanced_key_chord = KeyChord(keys)
+
+    def set_activation_copy_eval_keys(self, keys: Set[KeyCode]):
+        """Set the activation copy eval keys for the KeyChord."""
+        self.copy_eval_key_chord = KeyChord(keys)
+
+    def set_activation_copy_eval_advanced_keys(self, keys: Set[KeyCode]):
+        """Set the activation copy eval advanced keys for the KeyChord."""
+        self.copy_eval_advanced_key_chord = KeyChord(keys)
+
+    def set_activation_eval_clipboard_keys(self, keys: Set[KeyCode]):
+        """Set the activation eval clipboard keys for the KeyChord."""
+        self.eval_clipboard_key_chord = KeyChord(keys)
+
+    def set_activation_eval_clipboard_advanced_keys(self, keys: Set[KeyCode]):
+        """Set the activation eval clipboard advanced keys for the KeyChord."""
+        self.eval_clipboard_advanced_key_chord = KeyChord(keys)
+
+    def set_activation_copy_eval_clipboard_keys(self, keys: Set[KeyCode]):
+        """Set the activation copy eval clipboard keys for the KeyChord."""
+        self.copy_eval_clipboard_key_chord = KeyChord(keys)
+
+    def set_activation_copy_eval_clipboard_advanced_keys(self, keys: Set[KeyCode]):
+        """Set the activation copy eval clipboard advanced keys for the KeyChord."""
+        self.copy_eval_clipboard_advanced_key_chord = KeyChord(keys)
+
+    def set_activation_eval_current_text_keys(self, keys: Set[KeyCode]):
+        """Set the activation eval current text keys for the KeyChord."""
+        self.eval_current_text_key_chord = KeyChord(keys)
+
+    def set_activation_eval_current_text_advanced_keys(self, keys: Set[KeyCode]):
+        """Set the activation eval current text advanced keys for the KeyChord."""
+        self.eval_current_text_advanced_key_chord = KeyChord(keys)
+
+    def set_activation_copy_eval_current_text_keys(self, keys: Set[KeyCode]):
+        """Set the activation copy eval current text keys for the KeyChord."""
+        self.copy_eval_current_text_key_chord = KeyChord(keys)
+
+    def set_activation_copy_eval_current_text_advanced_keys(self, keys: Set[KeyCode]):
+        """Set the activation copy eval current text advanced keys for the KeyChord."""
+        self.copy_eval_current_text_advanced_key_chord = KeyChord(keys)
+
+    # def on_input_event(self, event):
+    #     """Handle input events and trigger callbacks if the key chord becomes active or inactive."""
+    #     if not self.key_chord or not self.active_backend:
+    #         return
+
+    #     key, event_type = event
+
+    #     was_active = self.key_chord.is_active()
+    #     is_active = self.key_chord.update(key, event_type)
+
+    #     if not was_active and is_active:
+    #         self._trigger_callbacks("on_activate")
+    #     elif was_active and not is_active:
+    #         self._trigger_callbacks("on_deactivate")
+    # def on_input_event(self, event):
+    #     """Handle input events and trigger callbacks for multiple key chords based on activation state."""
+    #     if not self.active_backend:
+    #         return
+
+    #     key, event_type = event
+
+    #     # Define key chords and their respective callbacks
+    #     key_chords = {
+    #         'key_chord': self.key_chord,
+    #         'copy_key_chord': self.copy_key_chord,
+    #         'eval_key_chord': self.eval_key_chord,
+    #         'eval_advanced_key_chord': self.eval_advanced_key_chord,
+    #         'copy_eval_key_chord': self.copy_eval_key_chord,
+    #         'copy_eval_advanced_key_chord': self.copy_eval_advanced_key_chord,
+    #         'eval_clipboard_key_chord': self.eval_clipboard_key_chord,
+    #         'eval_clipboard_advanced_key_chord': self.eval_clipboard_advanced_key_chord,
+    #         'copy_eval_clipboard_key_chord': self.copy_eval_clipboard_key_chord,
+    #         'copy_eval_clipboard_advanced_key_chord': self.copy_eval_clipboard_advanced_key_chord,
+    #         'eval_current_text_key_chord': self.eval_current_text_key_chord,
+    #         'eval_current_text_advanced_key_chord': self.eval_current_text_advanced_key_chord,
+    #         'copy_eval_current_text_key_chord': self.copy_eval_current_text_key_chord,
+    #         'copy_eval_current_text_advanced_key_chord': self.copy_eval_current_text_advanced_key_chord,
+    #     }
+
+    #     # Dictionary to store the previous activation state for each chord
+    #     previous_states = {}
+
+    #     # Iterate over defined key chords and process their activation
+    #     for chord_name, chord in key_chords.items():
+    #         was_active = previous_states.get(chord_name, False)  # Retrieve previous state
+    #         is_active = chord.update(key, event_type)  # Update state based on current event
+
+    #         # Check for state changes and trigger appropriate callbacks
+    #         if not was_active and is_active:
+    #             self._trigger_callbacks(f"{chord_name}_activate")
+    #         elif was_active and not is_active:
+    #             self._trigger_callbacks(f"{chord_name}_deactivate")
+
+    #         # Store the current state for the next event
+    #         previous_states[chord_name] = is_active
     def on_input_event(self, event):
-        """Handle input events and trigger callbacks if the key chord becomes active or inactive."""
-        if not self.key_chord or not self.active_backend:
+        """Handle input events and trigger callbacks for prioritized key chords based on activation state."""
+        if not self.active_backend:
             return
 
         key, event_type = event
 
-        was_active = self.key_chord.is_active()
-        is_active = self.key_chord.update(key, event_type)
+        # Define key chords in order of specificity (most specific first)
+        key_chords = [
+            ('copy_eval_current_text_advanced_key_chord', self.copy_eval_current_text_advanced_key_chord),
+            ('copy_eval_current_text_key_chord', self.copy_eval_current_text_key_chord),
+            ('eval_current_text_advanced_key_chord', self.eval_current_text_advanced_key_chord),
+            ('eval_current_text_key_chord', self.eval_current_text_key_chord),
+            ('copy_eval_clipboard_advanced_key_chord', self.copy_eval_clipboard_advanced_key_chord),
+            ('copy_eval_clipboard_key_chord', self.copy_eval_clipboard_key_chord),
+            ('eval_clipboard_advanced_key_chord', self.eval_clipboard_advanced_key_chord),
+            ('eval_clipboard_key_chord', self.eval_clipboard_key_chord),
+            ('copy_eval_advanced_key_chord', self.copy_eval_advanced_key_chord),
+            ('copy_eval_key_chord', self.copy_eval_key_chord),
+            ('eval_advanced_key_chord', self.eval_advanced_key_chord),
+            ('eval_key_chord', self.eval_key_chord),
+            ('copy_key_chord', self.copy_key_chord),
+            ('key_chord', self.key_chord),
+        ]
 
-        if not was_active and is_active:
-            self._trigger_callbacks("on_activate")
-        elif was_active and not is_active:
-            self._trigger_callbacks("on_deactivate")
+        # Dictionary to store the previous activation state for each chord
+        previous_states = {}
 
-    def add_callback(self, event: str, callback: Callable):
+        # Track whether a more specific chord has already been activated
+        specific_chord_triggered = False
+
+        # Iterate over defined key chords in order of specificity
+        for chord_name, chord in key_chords:
+            # Skip if a more specific chord has already been triggered
+            if specific_chord_triggered:
+                break
+
+            was_active = previous_states.get(chord_name, False)  # Retrieve previous state
+            is_active = chord.update(key, event_type)  # Update state based on current event
+
+            # Trigger callbacks only if no higher-priority chord is active
+            if not was_active and is_active:
+                self._trigger_callbacks(f"{chord_name}_activate")
+                specific_chord_triggered = True  # Mark that a chord was triggered
+            elif was_active and not is_active:
+                self._trigger_callbacks(f"{chord_name}_deactivate")
+
+            # Store the current state for the next event
+            previous_states[chord_name] = is_active
+
+    def add_callback(self, event: str, callback: Callable, kwargs: dict = {}):
         """Add a callback function for a specific event."""
         if event in self.callbacks:
-            self.callbacks[event].append(callback)
+            self.callbacks[event].append((callback, kwargs))
+        else:
+            self.callbacks[event] = [(callback, kwargs)]
 
     def _trigger_callbacks(self, event: str):
         """Trigger all callbacks associated with a specific event."""
-        for callback in self.callbacks.get(event, []):
-            callback()
+        for callback, kwargs in self.callbacks.get(event, []):
+            callback(**kwargs)
 
     def update_activation_keys(self):
         """Update activation keys from the current configuration."""

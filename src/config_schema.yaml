@@ -87,9 +87,81 @@ model_options:
 # Configuration options for activation and recording
 recording_options:
   activation_key:
-    value: ctrl+shift+space
+    value: insert
     type: str
     description: "The keyboard shortcut to activate the recording and transcribing process. Separate keys with a '+'."
+  copy_activation_key:
+    value: ctrl+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to copy the transcribed text to the clipboard. Separate keys with a '+'."
+  eval_activation_key:
+    value: shift+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the voiced instructions with GPT and type out the result. Separate keys with a '+'."
+  eval_activation_key_advanced:
+    value: meta+shift+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the voiced instructions with a more advanced GPT model and type out the result. Separate keys with a '+'."
+  copy_eval_activation_key:
+    value: ctrl+shift+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the voiced instructions with GPT and copy the result to the clipboard. Separate keys with a '+'."
+  copy_eval_activation_key_advanced:
+    value: meta+ctrl+shift+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the voiced instructions with a more advanced GPT model and copy the result to the clipboard. Separate keys with a '+'."
+  eval_clipboard_activation_key:
+    value: alt+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the text in the clipboard with GPT using the voiced instructions and type out the result. Separate keys with a '+'."
+  eval_clipboard_activation_key_advanced:
+    value: meta+alt+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the text in the clipboard with a more advanced GPT model using the voiced instructions and type out the result. Separate keys with a '+'."
+  copy_eval_clipboard_activation_key:
+    value: ctrl+alt+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the text in the clipboard with GPT using the voiced instructions and copy the result to the clipboard. Separate keys with a '+'."
+  copy_eval_clipboard_activation_key_advanced:
+    value: meta+ctrl+alt+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the text in the clipboard with a more advanced GPT model using the voiced instructions and copy the result to the clipboard. Separate keys with a '+'."
+  eval_current_text_activation_key:
+    value: alt+shift+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the currently selected text with GPT using the voiced instructions and type out the result. Separate keys with a '+'."
+  eval_current_text_activation_key_advanced:
+    value: meta+alt+shift+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the currently selected text with a more advanced GPT model using the voiced instructions and type out the result. Separate keys with a '+'."
+  copy_eval_current_text_activation_key:
+    value: ctrl+alt+shift+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the currently selected text with GPT using the voiced instructions and copy the result to the clipboard. Separate keys with a '+'." 
+  copy_eval_current_text_activation_key_advanced:
+    value: meta+ctrl+alt+shift+insert
+    type: str
+    description: "The keyboard shortcut to activate the recording and transcribing process, later to evaluate the currently selected text with a more advanced GPT model using the voiced instructions and copy the result to the clipboard. Separate keys with a '+'."
+  # copy_modifier:
+  #   value: ctrl
+  #   type: str
+  #   description: "The modifier key to use for copying the transcribed text or result to the clipboard. Options include 'ctrl', 'alt', 'shift', and 'meta'."
+  # eval_modifier:
+  #   value: shift
+  #   type: str
+  #   description: "The modifier key to use for evaluating the transcribed text or instructions with GPT. Options include 'ctrl', 'alt', 'shift', and 'meta'."
+  # eval_clipboard_modifier:
+  #   value: alt
+  #   type: str
+  #   description: "The modifier key to use for evaluating the text in the clipboard with GPT. Options include 'ctrl', 'alt', 'shift', and 'meta'."
+  # eval_current_text_modifier:
+  #   value: alt+shift
+  #   type: str
+  #   description: "The modifier key to use for evaluating the currently selected text with GPT. Options include 'ctrl', 'alt', 'shift', and 'meta'."
+  # eval_advanced_modifier:
+  #   value: meta
+  #   type: str
+  #   description: "The modifier key to use for evaluating the transcribed text or instructions with a more advanced GPT model. Options include 'ctrl', 'alt', 'shift', and 'meta'."
   input_backend:
     value: auto
     type: str

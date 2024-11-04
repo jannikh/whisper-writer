@@ -16,8 +16,6 @@
         "condition_on_previous_text": true,
         "vad_filter": false
     },
-    "activation_key": "ctrl + alt + space",
-    "copy_activation_key": "ctrl + shift + space",
     "sound_device": null,
     "sample_rate": 16000,
     "silence_duration": 1500,

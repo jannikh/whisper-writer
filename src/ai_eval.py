@@ -1,5 +1,5 @@
 import os
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 
@@ -80,19 +80,19 @@ llm = ChatOpenAI(temperature=TEMPERATURE, model=LLM_MODEL)
 
 TEMPERATURE_ADVANCED = .75
 LLM_MODEL_ADVANCED = "gpt-o1-mini"
-llm_gpt_4 = ChatOpenAI(temperature=TEMPERATURE_ADVANCED, model=LLM_MODEL_ADVANCED)
+llm_advanced = ChatOpenAI(temperature=TEMPERATURE_ADVANCED, model=LLM_MODEL_ADVANCED)
 
 # INITIALIZATIONS
 os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
 os.environ['LANGCHAIN_PROJECT'] = 'whisper-writer ai eval'
 
-def evaluate(instructions, context=None, gpt_4=False):
+def evaluate(instructions, context=None, advanced=False):
 	"""
-	this function takes the instructions given by the user and evaluates them via GPT-3.5-Turbo or GPT-4 using the EVAL_PROMPT
+	this function takes the instructions given by the user and evaluates them  using the EVAL_PROMPT
 	"""
 
-	print(f"Evaluating {instructions} with{' context ' + context if context else ''} using {'GPT-4' if gpt_4 else 'GPT-3.5-Turbo'}")
+	print(f"Evaluating {instructions} with{' context ' + context if context else ''} using {LLM_MODEL_ADVANCED if advanced else LLM_MODEL}")
 
 	prompt_args = {
 		'instructions': instructions,
@@ -104,11 +104,18 @@ def evaluate(instructions, context=None, gpt_4=False):
 	else:
 		prompt = ChatPromptTemplate.from_template(EVAL_CONTEXT_PROMPT)
 	
-	eval_chain = (
-		prompt
-		| llm
-		| StrOutputParser()
-	)
+	if advanced:
+		eval_chain = (
+			prompt
+			| llm_advanced
+			| StrOutputParser()
+		)
+	else:
+		eval_chain = (
+			prompt
+			| llm
+			| StrOutputParser()
+		)
 
 	langchain_tags = ["evaluate"]
 	if context:
